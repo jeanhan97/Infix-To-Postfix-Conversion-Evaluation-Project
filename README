@@ -1,0 +1,75 @@
+/*
+ * Name: Ji Eun Han
+ * Assignment: Project 02
+ * Section: TR 9:40am
+ * Lab TA: Chengyu Deng, Matt Delsordo
+ * I collaborated with Mackenzie Lee. 
+ */
+ 
+ README
+ 
+ Ji Eun Han 
+ Email: jhan46@u.rochester.edu
+ Partner: Mackenzie Lee 
+ 
+ The first method you'll see is the precedence method where we return the precedence of the operators. This was our
+ obstacle because it was difficult to figure out the order of precedence that works for the rest of the program. We 
+ mostly had problems with precedence of the parenthesis and the exponentiation as well as the logical not operator. 
+ However, I was able to orient the program so each of the number precedence assigned provided a reasonable postfix 
+ evaluation. And the case in which the operator cannot be recognized is also included which was one of the extra credit 
+ assignments. First there's the method to which we convert infix to postfix by getting the information from input file via 
+ scanner and assigning it to an Arraylist. Because there are spaces and no spaces in case the expression includes parenthesis,
+ we split the items so if it contains ( or ), it splits by character and if not splits by the spaces and then add each element
+ to an ArrayList for conversion. After, we also included a case where there might be two digit numbers like 63 in our case so 
+ even if we split the number to 6 and 3, if the two consecutive elements of the array is numeric, then we merge them together. 
+ 
+ Next comes the shunting yard algorithm to which we convert to postfix. If the element of the ArrayList is numeric, we enqueue it
+ and if it's an operator and there's nothing in the stack, we just push it in. However, if there's already an operator in the stack,
+ we compare the precedence of the input operator (tempFix) and the operator that's already in the stack (stack.peek) and push or enqueue 
+ accordingly. Here, if the precedence of tempFix is lower than the precedence of stack.peek, and there are parenthesis involved, 
+ we first push in the left parenthesis and after once we reach a right parenthesis, it pops then enqueues everything in the stack up until it 
+ reaches the left parenthesis (without pushing the right parenthesis) then pops the left parenthesis without enqueuing it. 
+ We also include an if else statement for when the operator tempFix is less than precedence of stack.peek but without the parenthesis. 
+ In this case we just pop then enqueue everything until the stack is empty. If the two operators (tempFix and stack.peek) have same 
+ precedences, and this does not apply for exponentiation for right associativity, we pop the stack.peek and push in the tempFix. Also
+ when we hit the last element of the ArrayList, we pop everything in the stack and add it to the queue. Then voila! There's the postfix. 
+ 
+ The next step is the evaluation process. I first prepared an output file of which we can print the postfix evaluation to. Then we hit the 
+ postFix Evluation method (which is labeled in the ShuntingYard.java class. The steps are those presented in the assignment sheet. We did have 
+ trouble with the if else statements here. Especially the num2.equals(0) part. But then we realized we have decimal points for num2 sometimes 
+ so we had to add an or part ot the if condition that num2 can equal 0 or 0.0 and then the program runned successfully. Here, we also have the extra
+ credit requirement of exponentiation and modulo evaluation. The arithemtic operators evaluate the postfix with numbers and the logical operators 
+ evaluate the numbers then produce either a 0 or 1 depending on false or true results. 
+ 
+ The details of the running process in the command line is listed in the Shunting Yard class main method. 
+ 
+ <Each classes Explained> 
+ 
+ All methods generic, we created isEmpty() method which will
+return true only if the queue is empty, enqueue(T x) method where x will be inserted at the end of the queue.
+Dequeue() method removes the head of the queue and returns the value of that head but if the list was originally
+empty, it will return null. One last method is the peek() method where it returns the first item of queue without
+deleting any data. DoubleLinkedList class includes the previous methods of Double linked list from last lab assignment, 
+DoublyLinkedList class is the interface used for the DoubleLinkedList class, MyDoubleNode class is to set the node
+functions like next and prev, LinkedListQueue class is the one that includes all the queue methods explained above, 
+while Queue class is the interface in which is used in LinkedListQueue class. 
+
+All methods generic, we created isEmpty() method which will
+return true only if the stack is empty, push(T x) method where x will be inserted at the end of the stack.
+pop() method removes the head of the stack and returns the value of that head but if the list was originally
+empty, it will return null. One last method is the peek() method where it returns the first item of stack without
+deleting any data. SingleLinkedList class includes the previous methods of single linked list from last lab assignment, 
+SimpleLinkedList class is the interface used for the SingleLinkedList class, MyNode class is to set the node
+functions like next, stackclass class is the one that includes all the stack methods explained above, 
+while stackinterface class is the interface in which is used in stackclass class, and lastly the testclass where such 
+methods are tested successfully. 
+
+The ShuntingYard method includes all the method I've explained in the top part of this README, including the main method. 
+infix_expr_short.txt file is the input file in which was listed in the assignment and postfix_eval_short.txt is the output
+file in which our postfix evaluations are listed. test.txt file is for the exponentiation testing in which the assignment 
+required us to have in order to prove that our exponentiation works. In order to test it, change from infix_eval_short.txt
+to test.txt in the main method in ShuntingYard class and run the program to see the postfix as well as the evaluation. 
+
+
+ 
+ 
